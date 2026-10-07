@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Called by the personal shell function `pi`; the real Pi binary is unmodified.
+set -u
+root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+real_pi="${PI_MINIMAL_REAL_PI:-$(type -P pi)}"
+if [[ -z "$real_pi" ]]; then
+  printf 'Pi executable not found on PATH.\n' >&2
+  exit 127
+fi
+node_bin="$(dirname -- "$real_pi")/node"
+[[ -x "$node_bin" ]] || node_bin="$(type -P node)"
+# Leave administrative commands and information-only invocations unchanged.
+sync=true
+case "${1:-}" in
+  install|remove|uninstall|update|list|config|auth|mcp) sync=false ;;
+esac
+for arg in "$@"; do
+  case "$arg" in -h|--help|-v|--version|--list-models|--export) sync=false ;; esac
+done
+if [[ "$sync" == true ]]; then
+  "$node_bin" "$root/scripts/sync-models.mjs" --quiet || true
+fi
+exec "$real_pi" "$@"

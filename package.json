@@ -1,0 +1,11 @@
+{
+  "name": "pi-minimal-personal",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "My personal Pi setup for coding, study, and exam prep with GPT Codex and OpenCode Go",
+  "pi": { "extensions": ["./extensions/minimal.ts"] },
+  "peerDependencies": { "@earendil-works/pi-coding-agent": "*", "typebox": "*" },
+  "scripts": { "test": "node --test --test-concurrency=1 test/*.test.mjs" }
+}

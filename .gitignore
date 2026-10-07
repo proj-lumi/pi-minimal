@@ -1,0 +1,13 @@
+node_modules/
+.cache/
+.env
+.env.*
+*.key
+auth.json
+models-store.json
+sessions/
+lessons/
+backups/
+*.jsonl
+*.log
+*.tmp

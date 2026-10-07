@@ -1,0 +1,24 @@
+{
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6-luna",
+  "defaultThinkingLevel": "low",
+  "enabledModels": [
+    "openai-codex/gpt-6-luna:low",
+    "openai-codex/gpt-6.1-sol:medium",
+    "openai-codex/gpt-6-astra:high",
+    "opencode-go/deepseek-v4.1-flash:low",
+    "opencode-go/glm-5.3:high",
+    "opencode-go/deepseek-v4-pro:high"
+  ],
+  "modelThinkingLevels": {
+    "openai-codex/gpt-6-luna": "low",
+    "openai-codex/gpt-6.1-sol": "medium",
+    "openai-codex/gpt-6-astra": "high",
+    "opencode-go/deepseek-v4.1-flash": "low",
+    "opencode-go/glm-5.3": "high",
+    "opencode-go/deepseek-v4-pro": "high"
+  },
+  "packages": [
+    "/absolute/path/to/pi-minimal"
+  ]
+}
