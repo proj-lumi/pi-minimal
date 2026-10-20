@@ -1,19 +1,19 @@
 # Pi Minimal
 
-**Four workflows. Six explicit model slots. No extra agents.**
+**Four workflows. Three explicit model slots. No extra agents.**
 
-My personal [Pi](https://pi.dev) 1.x setup, built around **GPT Codex + OpenCode Go** for coding, curious exploration, exam preparation, and everyday help—without turning every conversation into a lesson.
+My personal [Pi](https://pi.dev) 1.x setup, built around **GPT Codex** for coding, curious exploration, exam preparation, and everyday help—without turning every conversation into a lesson.
 
 This is an opinionated setup for how I work and learn, not a universal model ranking or framework. I'm sharing the extension, prompts, and reference configs so others can copy what fits and adapt the rest.
 
 - **Choose the workflow:** focused coding, open-ended study, assessment-matched practice, or direct general help.
-- **Choose the model:** two provider banks with fast, balanced, and deep slots. No automatic routing or cross-provider fallback.
+- **Choose the model:** fast, balanced, and deep slots. No automatic routing or provider fallback.
 - **Track evidence, not “mastery”:** exam progress requires independent answers, transfer, and later retrieval.
 - **Keep it small:** one extension, no installed runtime dependencies, no build step, no background model calls, and no custom quiz UI.
 
 ## Make it yours
 
-- Start with [`config/models.json`](config/models.json) for my GPT/Go model families, thinking defaults, and fast/balanced/deep roles. Adjust these to models available in your own catalog and accounts.
+- Start with [`config/models.json`](config/models.json) for my GPT model families, thinking defaults, and fast/balanced/deep roles. Adjust these to models available in your own catalog and accounts.
 - Adapt [`modes/`](modes/) to your coding, learning, and assessment preferences.
 - Use [`config/settings.example.json`](config/settings.example.json) and [`config/global-instructions.example.md`](config/global-instructions.example.md) as references, not drop-in replacements for your settings.
 - Keep your credentials, personal notes, and session history outside this repository. The optional STT config is a reference for a separate voice extension, not a bundled feature.
@@ -61,23 +61,21 @@ Start a fresh session after installation to avoid mixing earlier workflow instru
 | `/exam [course/topic]` | Prepare using actual sources and assessment formats |
 | `/coding [task]` | Make focused, maintainable changes |
 | `/general [task]` | Get direct help without a teaching or setup workflow |
-| `/brain` | Pick a model bank and slot |
-| `/brain go deep` | Explicitly select the Go deep slot |
+| `/brain` | Pick a model slot |
 | `/brain gpt deep xhigh` | Request a thinking level, if supported |
 | `/progress` | Show exam evidence without a model call |
 
-Mode commands use the current bank: `opencode-go` stays Go; otherwise GPT is selected. Study, exam, and coding request balanced; general requests fast. A command without a topic only changes mode and waits for your next message. Mode commands reset model/thinking to their slot defaults; use `/brain` or native `/thinking` afterward to override.
+Mode commands use the GPT model slots. Study, exam, and coding request balanced; general requests fast. A command without a topic only changes mode and waits for your next message. Mode commands reset model/thinking to their slot defaults; use `/brain` or native `/thinking` afterward to override.
 
 `pi --workflow study` selects initial instructions without overriding native model/thinking flags or resumed model selection. Plain startup uses general mode and leaves native model selection intact. Missing models or authentication produce a message, never a cross-provider fallback.
 
 ## Explicit model selection
 
-[`config/models.json`](config/models.json) defines two banks, each with fast, balanced, and deep roles:
+[`config/models.json`](config/models.json) defines fast, balanced, and deep roles:
 
-| Bank | Provider | Slots |
-| --- | --- | --- |
-| GPT | `openai-codex` | fast · balanced · deep |
-| Go | `opencode-go` | fast · balanced · deep |
+| Provider | Slots |
+| --- | --- |
+| `openai-codex` | fast · balanced · deep |
 
 These are configurable roles, not measured capability rankings. `/brain` resolves the latest available matching model when you invoke it and reports the actual thinking level. Image support and supported reasoning levels vary by model.
 

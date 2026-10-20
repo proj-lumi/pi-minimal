@@ -17,7 +17,6 @@ const { loadExtensions } = await import(pathToFileURL(join(pkg, 'dist/core/exten
 const root = fileURLToPath(new URL('..', import.meta.url));
 const available = [
   ['openai-codex', 'gpt-6-luna'], ['openai-codex', 'gpt-6.1-sol'], ['openai-codex', 'gpt-6-astra'],
-  ['opencode-go', 'deepseek-v4.1-flash'], ['opencode-go', 'glm-5.3'], ['opencode-go', 'deepseek-v4-pro'],
 ].map(([provider, id]) => ({ provider, id }));
 
 async function harness() {
@@ -113,12 +112,12 @@ test('mode instructions stay within word budgets and exclude personal project de
 test('switching model slots is explicit and rejects invalid input without fallback', async () => {
   const h = await harness();
   await h.emit('session_start', { reason: 'startup' });
-  await h.command('brain', 'go deep');
-  assert.equal(h.ctx.model.provider, 'opencode-go');
-  assert.equal(h.ctx.model.id, 'deepseek-v4-pro');
+  await h.command('brain', 'gpt deep');
+  assert.equal(h.ctx.model.provider, 'openai-codex');
+  assert.equal(h.ctx.model.id, 'gpt-6-astra');
   await h.command('brain', 'gpt fast low');
   assert.equal(h.ctx.model.id, 'gpt-6-luna');
-  await h.command('brain', 'not-a-bank invalid');
+  await h.command('brain', 'go invalid');
   assert.equal(h.ctx.model.id, 'gpt-6-luna');
 });
 test('progress tool binds evidence to actual user turns and restores the active branch', async () => {

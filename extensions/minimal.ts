@@ -28,12 +28,12 @@ export default function minimal(pi: ExtensionAPI) {
   const status = (ctx: ExtensionContext) => {
     if (ctx.hasUI) ctx.ui.setStatus('pi-minimal', `mode:${mode}`);
   };
-  const bankFor = (ctx: ExtensionContext) => ctx.model?.provider === 'opencode-go' ? 'go' : 'gpt';
+  const bankFor = (_ctx: ExtensionContext) => 'gpt';
 
   async function chooseModel(bank: string, tier: string, level: string | undefined, ctx: ExtensionContext) {
     const slot = config.slots.find(s => s.bank === bank && s.tier === tier);
     if (!slot || (level && !LEVELS.includes(level))) {
-      show('Usage: /brain [gpt|go] [fast|balanced|deep] [off|low|medium|high|xhigh|max]');
+      show('Usage: /brain gpt [fast|balanced|deep] [off|low|medium|high|xhigh|max]');
       return false;
     }
     const model = resolveSlot(ctx.modelRegistry.getAvailable(), slot);
@@ -113,18 +113,18 @@ export default function minimal(pi: ExtensionAPI) {
   }
 
   pi.registerCommand('brain', {
-    description: 'Switch model slot: /brain gpt|go fast|balanced|deep [thinking]',
+    description: 'Switch model slot: /brain gpt fast|balanced|deep [thinking]',
     handler: async (args, ctx) => {
       await ctx.waitForIdle();
       const words = args.trim().split(/\s+/).filter(Boolean);
       if (!words.length) {
         const labels = config.slots.map(s => `${s.bank} ${s.tier}`);
-        if (!ctx.hasUI) { show(`Model slots: ${labels.join(', ')}. Use /brain gpt balanced or /brain go deep.`); return; }
+        if (!ctx.hasUI) { show(`Model slots: ${labels.join(', ')}. Use /brain gpt balanced or /brain gpt deep.`); return; }
         const selected = await ctx.ui.select('Model slot (no automatic routing)', labels);
         if (!selected) return;
         words.push(...selected.split(' '));
       }
-      const bank = ['gpt', 'go'].includes(words[0]) ? words.shift()! : bankFor(ctx);
+      const bank = words[0] === 'gpt' ? words.shift()! : bankFor(ctx);
       const tier = words.shift() ?? 'balanced';
       const level = words.shift();
       if (words.length) { show('Too many arguments. Example: /brain gpt deep high'); return; }

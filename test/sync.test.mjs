@@ -8,7 +8,6 @@ import { spawnSync } from 'node:child_process';
 const script = fileURLToPath(new URL('../scripts/sync-models.mjs', import.meta.url));
 const models = {
   'openai-codex': { models: ['gpt-6-luna', 'gpt-6-sol', 'gpt-6.1-sol', 'gpt-6-astra'].map(id => ({ id })) },
-  'opencode-go': { models: ['deepseek-v4.1-flash', 'glm-5.3', 'deepseek-v4-pro'].map(id => ({ id })) },
 };
 const run = dir => spawnSync(process.execPath, [script, '--quiet'], { encoding: 'utf8', env: { ...process.env, PI_CODING_AGENT_DIR: dir } });
 

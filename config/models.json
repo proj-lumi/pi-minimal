@@ -3,9 +3,6 @@
   "slots": [
     { "bank": "gpt", "tier": "fast", "provider": "openai-codex", "family": "^gpt-(\\d+(?:\\.\\d+)*)-luna$", "thinking": "low" },
     { "bank": "gpt", "tier": "balanced", "provider": "openai-codex", "family": "^gpt-(\\d+(?:\\.\\d+)*)-sol$", "thinking": "medium" },
-    { "bank": "gpt", "tier": "deep", "provider": "openai-codex", "family": "^gpt-(\\d+(?:\\.\\d+)*)-astra$", "thinking": "high" },
-    { "bank": "go", "tier": "fast", "provider": "opencode-go", "family": "^deepseek-v(\\d+(?:\\.\\d+)*)-flash$", "thinking": "low" },
-    { "bank": "go", "tier": "balanced", "provider": "opencode-go", "family": "^glm-(\\d+(?:\\.\\d+)*)$", "thinking": "high" },
-    { "bank": "go", "tier": "deep", "provider": "opencode-go", "family": "^deepseek-v(\\d+(?:\\.\\d+)*)-pro$", "thinking": "high" }
+    { "bank": "gpt", "tier": "deep", "provider": "openai-codex", "family": "^gpt-(\\d+(?:\\.\\d+)*)-astra$", "thinking": "high" }
   ]
 }

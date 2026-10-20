@@ -5,7 +5,6 @@ import { compareVersions, flattenCatalog, reconcileSettings, resolveSlot, valida
 const config = JSON.parse(readFileSync(new URL('../config/models.json', import.meta.url)));
 const catalog = [
   ['openai-codex', 'gpt-6-luna'], ['openai-codex', 'gpt-6-sol'], ['openai-codex', 'gpt-6.1-sol'], ['openai-codex', 'gpt-6-astra'],
-  ['opencode-go', 'deepseek-v4.1-flash'], ['opencode-go', 'glm-5.3'], ['opencode-go', 'deepseek-v4-pro'],
 ].map(([provider, id]) => ({ provider, id }));
 
 test('exact families select newer numeric releases, never pro/preview or other providers', () => {
@@ -20,7 +19,7 @@ test('scope replacement preserves unrelated preferences and model entries, is id
   const initial = { theme: 'gruvbox', defaultProvider: 'openai-codex', defaultModel: 'gpt-6-sol', enabledModels: ['openai-codex/gpt-6-sol:high', 'other/my-model'], modelThinkingLevels: { 'openai-codex/gpt-6-sol': 'high', 'other/my-model': 'off' } };
   const { settings } = reconcileSettings(initial, config, catalog);
   assert.equal(settings.defaultModel, 'gpt-6.1-sol');
-  assert.equal(settings.enabledModels.length, 7);
+  assert.equal(settings.enabledModels.length, 4);
   assert.equal(settings.theme, 'gruvbox');
   assert.ok(!settings.enabledModels.includes('openai-codex/gpt-6-sol:high'));
   assert.equal(settings.modelThinkingLevels['other/my-model'], 'off');
@@ -32,9 +31,9 @@ test('missing catalog slots fail safely and disabled autoscope is a no-op', () =
   const initial = { enabledModels: ['personal'] };
   assert.equal(reconcileSettings(initial, { ...config, autoScope: false }, []).settings, initial);
 });
-test('bank validation prevents accidental Zen/pay-as-you-go routing', () => {
+test('provider validation prevents accidental fallback routing', () => {
   const invalid = structuredClone(config);
-  invalid.slots[3].provider = 'opencode';
+  invalid.slots[0].provider = 'opencode';
   assert.throws(() => validateConfig(invalid), /Invalid model slot/);
   const duplicates = structuredClone(config);
   duplicates.slots[1] = duplicates.slots[0];

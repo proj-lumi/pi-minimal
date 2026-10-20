@@ -5,18 +5,12 @@
   "enabledModels": [
     "openai-codex/gpt-6-luna:low",
     "openai-codex/gpt-6.1-sol:medium",
-    "openai-codex/gpt-6-astra:high",
-    "opencode-go/deepseek-v4.1-flash:low",
-    "opencode-go/glm-5.3:high",
-    "opencode-go/deepseek-v4-pro:high"
+    "openai-codex/gpt-6-astra:high"
   ],
   "modelThinkingLevels": {
     "openai-codex/gpt-6-luna": "low",
     "openai-codex/gpt-6.1-sol": "medium",
-    "openai-codex/gpt-6-astra": "high",
-    "opencode-go/deepseek-v4.1-flash": "low",
-    "opencode-go/glm-5.3": "high",
-    "opencode-go/deepseek-v4-pro": "high"
+    "openai-codex/gpt-6-astra": "high"
   },
   "packages": [
     "/absolute/path/to/pi-minimal"
